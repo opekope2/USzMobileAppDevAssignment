@@ -1,9 +1,12 @@
 package opekope2.recipemanager.activity;
 
+import static opekope2.recipemanager.Util.alert;
+import static opekope2.recipemanager.Util.isNullOrEmpty;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,15 +17,24 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.function.BiFunction;
 
 import opekope2.recipemanager.R;
 import opekope2.recipemanager.fragment.LoginFragment;
 import opekope2.recipemanager.fragment.RegisterFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getName();
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    private void configureTabs(TabLayout.Tab tab, int i) {
+        tab.setText(LoginRegisterFragmentAdapter.TAB_TEXT_IDS[i]);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,26 +47,44 @@ public class MainActivity extends AppCompatActivity {
         new TabLayoutMediator(tabLayoutMain, viewPagerMain, this::configureTabs).attach();
     }
 
-    private void configureTabs(TabLayout.Tab tab, int i) {
-        tab.setText(LoginRegisterFragmentAdapter.TAB_TEXT_IDS[i]);
+    private void handleAuth(View button, BiFunction<String, String, Task<AuthResult>> authMethod, Runnable onSuccess, Runnable onFail) {
+        EditText editTextUsername = findViewById(R.id.editTextEmail),
+                editTextPassword = findViewById(R.id.editTextPassword);
+        String username = editTextUsername.getText().toString(),
+                password = editTextPassword.getText().toString();
+
+        if (isNullOrEmpty(username) || isNullOrEmpty(password)) {
+            onFail.run();
+            return;
+        }
+
+        button.setEnabled(false);
+        authMethod.apply(username, password).addOnCompleteListener(this, task -> {
+            button.setEnabled(true);
+            if (task.isSuccessful()) {
+                onSuccess.run();
+            } else {
+                onFail.run();
+            }
+        });
     }
 
     public void logIn(View view) {
-        EditText editTextUsername = findViewById(R.id.editTextUsername),
-                editTextPassword = findViewById(R.id.editTextPassword);
-        String username = editTextUsername.getText().toString(),
-                password = editTextPassword.getText().toString();
-
-        Log.d(TAG, "Trying to log in as " + username);
+        handleAuth(
+                view,
+                auth::signInWithEmailAndPassword,
+                () -> Toast.makeText(this, "Login successful, to do: continue", Toast.LENGTH_LONG).show(),
+                () -> alert(this, R.string.login_failed)
+        );
     }
 
     public void register(View view) {
-        EditText editTextUsername = findViewById(R.id.editTextUsername),
-                editTextPassword = findViewById(R.id.editTextPassword);
-        String username = editTextUsername.getText().toString(),
-                password = editTextPassword.getText().toString();
-
-        Log.d(TAG, "Trying to register as " + username);
+        handleAuth(
+                view,
+                auth::createUserWithEmailAndPassword,
+                () -> Toast.makeText(this, "Registration successful, to do: continue", Toast.LENGTH_LONG).show(),
+                () -> alert(this, R.string.register_failed)
+        );
     }
 
     private static class LoginRegisterFragmentAdapter extends FragmentStateAdapter {

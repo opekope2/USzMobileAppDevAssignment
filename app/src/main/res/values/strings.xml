@@ -4,4 +4,6 @@
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
     <string name="register">Register</string>
+    <string name="login_failed">Login failed</string>
+    <string name="register_failed">Registration failed</string>
 </resources>
