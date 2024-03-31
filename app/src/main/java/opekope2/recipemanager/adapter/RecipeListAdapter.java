@@ -1,5 +1,8 @@
 package opekope2.recipemanager.adapter;
 
+import static opekope2.recipemanager.Util.RECIPE_EXTRA_KEY;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import opekope2.recipemanager.R;
 import opekope2.recipemanager.data.Recipe;
 
 @AllArgsConstructor
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolder> {
     private final Context context;
-    private final List<Recipe> recipes;
+    @Getter
+    private List<Recipe> recipes;
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -57,7 +68,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            // TODO
+            Intent intent = new Intent(context, RecipeViewActivity.class);
+            intent.putExtra(RECIPE_EXTRA_KEY, recipe);
+            context.startActivity(intent);
         }
     }
 }

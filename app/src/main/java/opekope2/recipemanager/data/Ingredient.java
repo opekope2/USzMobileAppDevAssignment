@@ -7,7 +7,9 @@ import androidx.annotation.NonNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class Ingredient implements Parcelable {
