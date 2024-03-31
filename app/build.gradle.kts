@@ -46,6 +46,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.swiperefreshlayout)
 
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
