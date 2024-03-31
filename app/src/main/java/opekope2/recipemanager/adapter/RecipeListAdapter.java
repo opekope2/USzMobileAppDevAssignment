@@ -1,9 +1,10 @@
 package opekope2.recipemanager.adapter;
 
-import static opekope2.recipemanager.Util.RECIPE_EXTRA_KEY;
+import static opekope2.recipemanager.Util.RECIPE_REFERENCE_EXTRA_KEY;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +18,18 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import opekope2.recipemanager.R;
+import opekope2.recipemanager.activity.RecipeViewActivity;
 import opekope2.recipemanager.data.Recipe;
+import opekope2.recipemanager.data.RecipeReference;
 
 @AllArgsConstructor
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ViewHolder> {
     private final Context context;
     @Getter
-    private List<Recipe> recipes;
+    private List<RecipeReference> recipes;
 
     @SuppressLint("NotifyDataSetChanged")
-    public void updateRecipes(List<Recipe> recipes) {
+    public void updateRecipes(List<RecipeReference> recipes) {
         this.recipes = recipes;
         notifyDataSetChanged();
     }
@@ -39,8 +42,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Recipe current = recipes.get(position);
-        holder.bind(current);
+        RecipeReference currentReference = recipes.get(position);
+        holder.bind(currentReference);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
     public static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final Context context;
         private final TextView textViewRecipeName;
-        private Recipe recipe;
+        private RecipeReference recipeReference;
 
         public ViewHolder(Context context, @NonNull View itemView) {
             super(itemView);
@@ -61,15 +64,16 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
             textViewRecipeName = itemView.findViewById(R.id.textViewRecipeName);
         }
 
-        public void bind(Recipe recipe) {
-            this.recipe = recipe;
+        public void bind(RecipeReference recipeReference) {
+            this.recipeReference = recipeReference;
+            Recipe recipe = recipeReference.getRecipe();
             textViewRecipeName.setText(recipe.getName());
         }
 
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, RecipeViewActivity.class);
-            intent.putExtra(RECIPE_EXTRA_KEY, recipe);
+            intent.putExtra(RECIPE_REFERENCE_EXTRA_KEY, recipeReference);
             context.startActivity(intent);
         }
     }

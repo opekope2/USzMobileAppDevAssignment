@@ -27,6 +27,7 @@ import java.util.stream.StreamSupport;
 import opekope2.recipemanager.R;
 import opekope2.recipemanager.adapter.RecipeListAdapter;
 import opekope2.recipemanager.data.Recipe;
+import opekope2.recipemanager.data.RecipeReference;
 
 public class RecipeListActivity extends AppCompatActivity {
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -68,8 +69,8 @@ public class RecipeListActivity extends AppCompatActivity {
 
         collection.get()
                 .addOnSuccessListener(result -> {
-                    List<Recipe> recipes = StreamSupport.stream(result.spliterator(), false)
-                            .map(doc -> doc.toObject(Recipe.class))
+                    List<RecipeReference> recipes = StreamSupport.stream(result.spliterator(), false)
+                            .map(doc -> new RecipeReference(doc.getId(), doc.toObject(Recipe.class)))
                             .collect(Collectors.toList());
                     recipesAdapter.updateRecipes(recipes);
 

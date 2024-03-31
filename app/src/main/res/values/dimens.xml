@@ -3,4 +3,5 @@
     <dimen name="default_margin">16dp</dimen>
     <dimen name="edittext_max_width">384dp</dimen>
     <dimen name="card_padding">8dp</dimen>
+    <dimen name="recipe_view_header_font_size">20sp</dimen>
 </resources>
