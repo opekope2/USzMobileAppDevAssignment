@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,8 +46,9 @@ public class RecipeListActivity extends AppCompatActivity {
             );
         }
 
+        GridLayoutManager recipesLayoutManager = new GridLayoutManager(this, getResources().getInteger(R.integer.recipe_columns));
         recyclerViewRecipes = findViewById(R.id.recyclerViewRecipes);
-        recyclerViewRecipes.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewRecipes.setLayoutManager(recipesLayoutManager);
         recyclerViewRecipes.setAdapter(new RecipeListAdapter(this, testData));
     }
 
