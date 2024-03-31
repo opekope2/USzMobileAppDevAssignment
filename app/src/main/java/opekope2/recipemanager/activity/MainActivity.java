@@ -2,10 +2,10 @@ package opekope2.recipemanager.activity;
 
 import static opekope2.recipemanager.Util.isNullOrEmpty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         tab.setText(LoginRegisterFragmentAdapter.TAB_TEXT_IDS[i]);
     }
 
+    private void viewRecipes() {
+        startActivity(new Intent(this, RecipeListActivity.class));
+        finish();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         ViewPager2 viewPagerMain = findViewById(R.id.viewPagerMain);
         viewPagerMain.setAdapter(new LoginRegisterFragmentAdapter(getSupportFragmentManager(), getLifecycle()));
         new TabLayoutMediator(tabLayoutMain, viewPagerMain, this::configureTabs).attach();
+
+        if (auth.getCurrentUser() != null) {
+            viewRecipes();
+        }
     }
 
     private void handleAuth(View button, BiFunction<String, String, Task<AuthResult>> authMethod, Runnable onSuccess, Runnable onFail) {
@@ -82,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         handleAuth(
                 view,
                 auth::signInWithEmailAndPassword,
-                () -> Toast.makeText(this, "Login successful, to do: continue", Toast.LENGTH_LONG).show(),
+                this::viewRecipes,
                 () -> alert(R.string.login_failed)
         );
     }
@@ -91,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         handleAuth(
                 view,
                 auth::createUserWithEmailAndPassword,
-                () -> Toast.makeText(this, "Registration successful, to do: continue", Toast.LENGTH_LONG).show(),
+                this::viewRecipes,
                 () -> alert(R.string.register_failed)
         );
     }

@@ -6,4 +6,17 @@
     <string name="register">Register</string>
     <string name="login_failed">Login failed</string>
     <string name="register_failed">Registration failed</string>
+    <string name="recipes">Recipes</string>
+    <string name="add_recipe">Add recipe</string>
+    <string name="edit">Edit</string>
+    <string name="log_out">Log out</string>
+    <string name="recipe_name">Recipe name</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="edit_recipe">Edit recipe</string>
+    <string name="view_recipe">View recipe</string>
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
+    <string name="cancel">Cancel</string>
+    <string name="unsaved">You have unsaved changes</string>
 </resources>
