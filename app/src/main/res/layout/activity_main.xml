@@ -15,7 +15,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:title="@string/app_name"
-                android:titleTextColor="?attr/colorOnPrimary" />
+                android:titleTextColor="?attr/colorOnPrimary"
+                android:background="?attr/colorPrimary" />
 
         <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
