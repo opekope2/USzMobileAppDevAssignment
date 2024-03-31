@@ -1,14 +1,51 @@
 package opekope2.recipemanager.data;
 
-import java.util.Collection;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class Recipe {
-    String name;
-    Collection<Ingredient> ingredients;
-    Collection<String> instructions;
+public class Recipe implements Parcelable {
+    private String name;
+    private List<Ingredient> ingredients;
+    private List<String> instructions;
+
+    protected Recipe(Parcel in) {
+        this(
+                in.readString(),
+                in.createTypedArrayList(Ingredient.CREATOR),
+                in.createStringArrayList()
+        );
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeTypedList(ingredients);
+        dest.writeStringList(instructions);
+    }
 }
