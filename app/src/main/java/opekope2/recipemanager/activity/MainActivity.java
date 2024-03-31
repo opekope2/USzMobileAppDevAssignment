@@ -1,6 +1,5 @@
 package opekope2.recipemanager.activity;
 
-import static opekope2.recipemanager.Util.alert;
 import static opekope2.recipemanager.Util.isNullOrEmpty;
 
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -69,12 +70,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void alert(@StringRes int messageId) {
+        new AlertDialog.Builder(this)
+                .setMessage(messageId)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                })
+                .show();
+    }
+
     public void logIn(View view) {
         handleAuth(
                 view,
                 auth::signInWithEmailAndPassword,
                 () -> Toast.makeText(this, "Login successful, to do: continue", Toast.LENGTH_LONG).show(),
-                () -> alert(this, R.string.login_failed)
+                () -> alert(R.string.login_failed)
         );
     }
 
@@ -83,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 view,
                 auth::createUserWithEmailAndPassword,
                 () -> Toast.makeText(this, "Registration successful, to do: continue", Toast.LENGTH_LONG).show(),
-                () -> alert(this, R.string.register_failed)
+                () -> alert(R.string.register_failed)
         );
     }
 
