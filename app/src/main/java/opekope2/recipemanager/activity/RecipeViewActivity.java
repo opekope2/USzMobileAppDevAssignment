@@ -1,6 +1,7 @@
 package opekope2.recipemanager.activity;
 
-import static opekope2.recipemanager.Util.RECIPE_REFERENCE_EXTRA_KEY;
+import static opekope2.recipemanager.Util.RECIPE_DOCUMENT_ID_EXTRA_KEY;
+import static opekope2.recipemanager.Util.RECIPE_EXTRA_KEY;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,10 +16,10 @@ import java.util.Objects;
 import opekope2.recipemanager.R;
 import opekope2.recipemanager.data.Ingredient;
 import opekope2.recipemanager.data.Recipe;
-import opekope2.recipemanager.data.RecipeReference;
 
 public class RecipeViewActivity extends AppCompatActivity {
-    private RecipeReference recipeReference;
+    private String recipeDocumentId;
+    private Recipe recipe;
     private TextView textViewIngredients;
     private TextView textViewInstructions;
 
@@ -27,7 +28,7 @@ public class RecipeViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_view);
 
-        if (!getIntent().hasExtra(RECIPE_REFERENCE_EXTRA_KEY)) {
+        if (!getIntent().hasExtra(RECIPE_DOCUMENT_ID_EXTRA_KEY) || !getIntent().hasExtra(RECIPE_EXTRA_KEY)) {
             finish();
             return;
         }
@@ -35,13 +36,12 @@ public class RecipeViewActivity extends AppCompatActivity {
         textViewIngredients = findViewById(R.id.textViewIngredients);
         textViewInstructions = findViewById(R.id.textViewInstructions);
 
-        recipeReference = Objects.requireNonNull(getIntent().getParcelableExtra(RECIPE_REFERENCE_EXTRA_KEY));
+        recipeDocumentId = getIntent().getStringExtra(RECIPE_DOCUMENT_ID_EXTRA_KEY);
+        recipe = Objects.requireNonNull(getIntent().getParcelableExtra(RECIPE_EXTRA_KEY));
         bind();
     }
 
     private void bind() {
-        Recipe recipe = recipeReference.getRecipe();
-
         Objects.requireNonNull(getSupportActionBar()).setTitle(recipe.getName());
 
         StringBuilder ingredientListBuilder = new StringBuilder();
