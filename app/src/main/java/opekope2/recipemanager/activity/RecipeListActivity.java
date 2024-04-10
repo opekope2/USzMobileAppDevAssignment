@@ -84,7 +84,7 @@ public class RecipeListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_recipe_list, menu);
+        getMenuInflater().inflate(R.menu.recipe_list, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

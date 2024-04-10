@@ -57,7 +57,7 @@ public class RecipeViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_recipe_view, menu);
+        getMenuInflater().inflate(R.menu.recipe_view, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
