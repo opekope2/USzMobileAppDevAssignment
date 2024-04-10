@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import opekope2.recipemanager.data.Instruction;
+
 public class InstructionListViewerAdapter extends AbstractInstructionListAdapter<InstructionListViewerAdapter.ViewHolder> {
-    public InstructionListViewerAdapter(Context context, List<String> instructions) {
+    public InstructionListViewerAdapter(Context context, List<Instruction> instructions) {
         super(context, instructions);
     }
 
@@ -22,7 +24,7 @@ public class InstructionListViewerAdapter extends AbstractInstructionListAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String currentInstruction = instructions.get(position);
+        Instruction currentInstruction = instructions.get(position);
         holder.bind(currentInstruction);
     }
 
@@ -35,8 +37,8 @@ public class InstructionListViewerAdapter extends AbstractInstructionListAdapter
             textViewInstruction = itemView;
         }
 
-        public void bind(String instruction) {
-            textViewInstruction.setText(instruction);
+        public void bind(Instruction instruction) {
+            textViewInstruction.setText(instruction.getInstruction());
         }
     }
 }

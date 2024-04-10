@@ -17,13 +17,13 @@ import lombok.NoArgsConstructor;
 public class Recipe implements Parcelable {
     private String name;
     private List<Ingredient> ingredients;
-    private List<String> instructions;
+    private List<Instruction> instructions;
 
     protected Recipe(Parcel in) {
         this(
                 in.readString(),
                 in.createTypedArrayList(Ingredient.CREATOR),
-                in.createStringArrayList()
+                in.createTypedArrayList(Instruction.CREATOR)
         );
     }
 
@@ -48,6 +48,6 @@ public class Recipe implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeTypedList(ingredients);
-        dest.writeStringList(instructions);
+        dest.writeTypedList(instructions);
     }
 }
