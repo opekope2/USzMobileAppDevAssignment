@@ -17,12 +17,10 @@
                 android:textStyle="bold"
                 android:textSize="@dimen/recipe_view_header_font_size" />
 
-        <TextView
-                android:orientation="vertical"
+        <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/textViewIngredients"
-                tools:text="Ingredient list" />
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerViewIngredients" />
 
         <TextView
                 android:text="@string/instructions"
@@ -31,11 +29,9 @@
                 android:textStyle="bold"
                 android:textSize="@dimen/recipe_view_header_font_size" />
 
-        <TextView
-                android:orientation="vertical"
+        <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/textViewInstructions"
-                tools:text="Instruction list" />
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerViewInstructions" />
     </LinearLayout>
 </ScrollView>

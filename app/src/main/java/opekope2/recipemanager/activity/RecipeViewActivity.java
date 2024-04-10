@@ -6,22 +6,24 @@ import static opekope2.recipemanager.Util.RECIPE_EXTRA_KEY;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Objects;
 
 import opekope2.recipemanager.R;
-import opekope2.recipemanager.data.Ingredient;
+import opekope2.recipemanager.adapter.IngredientListViewerAdapter;
+import opekope2.recipemanager.adapter.InstructionListViewerAdapter;
 import opekope2.recipemanager.data.Recipe;
 
 public class RecipeViewActivity extends AppCompatActivity {
     private String recipeDocumentId;
     private Recipe recipe;
-    private TextView textViewIngredients;
-    private TextView textViewInstructions;
+    private RecyclerView recyclerViewIngredients;
+    private RecyclerView recyclerViewInstructions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,13 @@ public class RecipeViewActivity extends AppCompatActivity {
             return;
         }
 
-        textViewIngredients = findViewById(R.id.textViewIngredients);
-        textViewInstructions = findViewById(R.id.textViewInstructions);
+        RecyclerView.LayoutManager ingredientsLayoutManager = new LinearLayoutManager(this);
+        recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
+        recyclerViewIngredients.setLayoutManager(ingredientsLayoutManager);
+
+        RecyclerView.LayoutManager instructionsLayoutManager = new LinearLayoutManager(this);
+        recyclerViewInstructions = findViewById(R.id.recyclerViewInstructions);
+        recyclerViewInstructions.setLayoutManager(instructionsLayoutManager);
 
         recipeDocumentId = getIntent().getStringExtra(RECIPE_DOCUMENT_ID_EXTRA_KEY);
         recipe = Objects.requireNonNull(getIntent().getParcelableExtra(RECIPE_EXTRA_KEY));
@@ -44,24 +51,8 @@ public class RecipeViewActivity extends AppCompatActivity {
     private void bind() {
         Objects.requireNonNull(getSupportActionBar()).setTitle(recipe.getName());
 
-        StringBuilder ingredientListBuilder = new StringBuilder();
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            ingredientListBuilder
-                    .append(ingredient.getAmount())
-                    .append(ingredient.getUnit())
-                    .append(' ')
-                    .append(ingredient.getIngredient())
-                    .append('\n');
-        }
-        textViewIngredients.setText(ingredientListBuilder.toString());
-
-        StringBuilder instructionListBuilder = new StringBuilder();
-        for (String instruction : recipe.getInstructions()) {
-            instructionListBuilder
-                    .append(instruction)
-                    .append('\n');
-        }
-        textViewInstructions.setText(instructionListBuilder.toString());
+        recyclerViewIngredients.setAdapter(new IngredientListViewerAdapter(this, recipe.getIngredients()));
+        recyclerViewInstructions.setAdapter(new InstructionListViewerAdapter(this, recipe.getInstructions()));
     }
 
     @Override
