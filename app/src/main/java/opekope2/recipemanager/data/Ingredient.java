@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class Ingredient implements Parcelable {
-    private int amount;
+    private double amount;
     private String unit;
     private String ingredient;
 
     protected Ingredient(Parcel in) {
         this(
-                in.readInt(),
+                in.readDouble(),
                 in.readString(),
                 in.readString()
         );
@@ -44,7 +44,7 @@ public class Ingredient implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(amount);
+        dest.writeDouble(amount);
         dest.writeString(unit);
         dest.writeString(ingredient);
     }
