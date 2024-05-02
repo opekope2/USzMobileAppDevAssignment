@@ -1,8 +1,5 @@
 package opekope2.recipemanager.activity;
 
-import static opekope2.recipemanager.Util.RECIPES_COLLECTION_NAME;
-import static opekope2.recipemanager.Util.USERS_COLLECTION_NAME;
-
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.Menu;
@@ -17,7 +14,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Collections;
@@ -28,11 +24,13 @@ import java.util.stream.StreamSupport;
 import opekope2.recipemanager.R;
 import opekope2.recipemanager.adapter.RecipeListAdapter;
 import opekope2.recipemanager.data.Recipe;
+import opekope2.recipemanager.services.RecipeManagerService;
 
 public class RecipeListActivity extends AppCompatActivity {
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private FirebaseUser user;
+    private final RecipeManagerService recipeManager = new RecipeManagerService(firestore);
     private SwipeRefreshLayout swipeRefreshRecipeList;
     private RecyclerView recyclerViewRecipes;
     private RecipeListAdapter recipesAdapter;
@@ -62,12 +60,7 @@ public class RecipeListActivity extends AppCompatActivity {
     }
 
     private void loadRecipes() {
-        CollectionReference collection = firestore
-                .collection(USERS_COLLECTION_NAME)
-                .document(user.getUid())
-                .collection(RECIPES_COLLECTION_NAME);
-
-        collection.get()
+        recipeManager.getRecipes(user)
                 .addOnSuccessListener(result -> {
                     List<Pair<String, Recipe>> recipes = StreamSupport.stream(result.spliterator(), false)
                             .map(doc -> new Pair<>(doc.getId(), doc.toObject(Recipe.class)))
