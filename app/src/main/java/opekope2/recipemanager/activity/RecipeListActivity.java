@@ -54,6 +54,11 @@ public class RecipeListActivity extends AppCompatActivity {
 
         swipeRefreshRecipeList = findViewById(R.id.swipeRefreshRecipeList);
         swipeRefreshRecipeList.setOnRefreshListener(this::loadRecipes);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         swipeRefreshRecipeList.setRefreshing(true);
         loadRecipes();
