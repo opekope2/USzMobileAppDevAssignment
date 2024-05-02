@@ -8,10 +8,12 @@ import androidx.annotation.NonNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class Ingredient implements Parcelable {
     private double amount;
     private String unit;
