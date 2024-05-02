@@ -70,7 +70,7 @@ public class RecipeListActivity extends AppCompatActivity {
                     swipeRefreshRecipeList.setRefreshing(false);
                 })
                 .addOnFailureListener(exception -> {
-                    Toast.makeText(RecipeListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RecipeListActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
                     swipeRefreshRecipeList.setRefreshing(false);
                 });
     }
