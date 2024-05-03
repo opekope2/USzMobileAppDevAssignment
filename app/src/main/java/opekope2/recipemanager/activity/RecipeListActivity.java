@@ -1,7 +1,6 @@
 package opekope2.recipemanager.activity;
 
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -67,8 +66,8 @@ public class RecipeListActivity extends AppCompatActivity {
     private void loadRecipes() {
         recipeManager.getRecipes(user)
                 .addOnSuccessListener(result -> {
-                    List<Pair<String, Recipe>> recipes = StreamSupport.stream(result.spliterator(), false)
-                            .map(doc -> new Pair<>(doc.getId(), doc.toObject(Recipe.class)))
+                    List<Recipe> recipes = StreamSupport.stream(result.spliterator(), false)
+                            .map(doc -> doc.toObject(Recipe.class))
                             .collect(Collectors.toList());
                     recipesAdapter.updateRecipes(recipes);
 
