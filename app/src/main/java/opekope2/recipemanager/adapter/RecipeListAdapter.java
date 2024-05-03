@@ -1,7 +1,6 @@
 package opekope2.recipemanager.adapter;
 
-import static opekope2.recipemanager.Util.RECIPE_DOCUMENT_ID_EXTRA_KEY;
-import static opekope2.recipemanager.Util.RECIPE_EXTRA_KEY;
+import static opekope2.recipemanager.Util.RECIPE_ID_EXTRA_KEY;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -71,8 +70,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, RecipeViewActivity.class);
-            intent.putExtra(RECIPE_DOCUMENT_ID_EXTRA_KEY, recipe.getId());
-            intent.putExtra(RECIPE_EXTRA_KEY, recipe);
+            intent.putExtra(RECIPE_ID_EXTRA_KEY, recipe.getId());
             context.startActivity(intent);
         }
     }
