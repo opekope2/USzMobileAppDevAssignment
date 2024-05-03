@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/card_padding"
-            android:layout_marginStart="@dimen/card_padding"
-            android:layout_marginEnd="@dimen/card_padding"
-            android:layout_marginBottom="@dimen/card_padding"
-            tools:layout_height="100dp"
-            app:cardElevation="4dp">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/card_padding"
+        android:layout_marginStart="@dimen/card_padding"
+        android:layout_marginEnd="@dimen/card_padding"
+        android:layout_marginBottom="@dimen/card_padding"
+        tools:layout_height="100dp"
+        app:cardElevation="4dp">
 
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:padding="@dimen/card_padding">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/card_padding">
 
             <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewRecipeName"
-                    android:ellipsize="end"
-                    tools:text="Recipe title" />
+                android:id="@+id/textViewRecipeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="Recipe title" />
+
+            <TextView
+                android:id="@+id/textViewRecipeDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Recipe description" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

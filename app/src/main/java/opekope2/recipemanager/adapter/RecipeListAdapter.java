@@ -51,6 +51,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
     public static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final Context context;
         private final TextView textViewRecipeName;
+        private final TextView textViewRecipeDescription;
         private Recipe recipe;
 
         public ViewHolder(Context context, @NonNull View itemView) {
@@ -59,12 +60,14 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
 
             itemView.setOnClickListener(this);
             textViewRecipeName = itemView.findViewById(R.id.textViewRecipeName);
+            textViewRecipeDescription = itemView.findViewById(R.id.textViewRecipeDescription);
         }
 
         public void bind(Recipe recipe) {
             this.recipe = recipe;
 
             textViewRecipeName.setText(recipe.getName());
+            textViewRecipeDescription.setText(recipe.getDescription());
         }
 
         @Override
