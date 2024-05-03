@@ -1,5 +1,9 @@
 package opekope2.recipemanager.activity;
 
+import static opekope2.recipemanager.Util.RECIPE_ID_EXTRA_KEY;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -91,7 +95,23 @@ public class RecipeListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // Thanks Google for removing switch-case, I hate it
         if (item.getItemId() == R.id.addRecipe) {
-            // TODO
+            dialogService.prompt(R.string.create_recipe, R.string.recipe_name, R.string.create_recipe, android.R.string.cancel, result -> {
+                if (result == null) return;
+
+                ProgressDialog progressDialog = dialogService.progress(R.string.creating_recipe);
+                recipeManager.createRecipe(user, new Recipe(null, result, "", Collections.emptyList(), Collections.emptyList()))
+                        .addOnSuccessListener(id -> {
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(this, RecipeEditActivity.class);
+                            intent.putExtra(RECIPE_ID_EXTRA_KEY, id);
+                            startActivity(intent);
+                        })
+                        .addOnFailureListener(error -> {
+                            progressDialog.dismiss();
+                            dialogService.alert(R.string.recipe_creation_failed, error.getMessage(), android.R.string.ok, (dialog, which) -> {
+                            });
+                        });
+            });
             return true;
         } else if (item.getItemId() == R.id.logOut) {
             auth.signOut();

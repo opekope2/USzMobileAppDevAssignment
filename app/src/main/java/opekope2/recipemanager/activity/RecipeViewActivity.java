@@ -105,7 +105,10 @@ public class RecipeViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // Thanks Google for removing switch-case, I hate it
         if (item.getItemId() == R.id.editRecipe) {
-            // TODO
+            Intent intent = new Intent(this, RecipeEditActivity.class);
+            intent.putExtra(RECIPE_ID_EXTRA_KEY, recipeId);
+            startActivity(intent);
+            finish();
             return true;
         } else if (item.getItemId() == R.id.deleteRecipe) {
             dialogService.confirm(R.string.confirm_delete, R.string.delete, android.R.string.cancel, (alertDialog, which) -> {

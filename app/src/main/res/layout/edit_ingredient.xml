@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_height="100dp">
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="@string/amount"
+        android:ems="10"
+        android:id="@+id/editTextAmount"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/default_margin"
+        app:layout_constraintDimensionRatio="2"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/unit"
+        android:ems="10"
+        android:id="@+id/editTextUnit"
+        app:layout_constraintDimensionRatio="2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextAmount"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/ingredient"
+        android:ems="10"
+        android:id="@+id/editTextIngredient"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonDeleteIngredient"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextUnit"
+        android:layout_marginStart="@dimen/default_margin"
+        android:importantForAutofill="no" />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/delete"
+        android:src="@drawable/delete"
+        android:background="?android:selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextIngredient"
+        app:layout_constraintTop_toTopOf="@+id/editTextIngredient"
+        android:id="@+id/imageButtonDeleteIngredient"
+        app:tint="?attr/colorPrimary"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:layout_constraintDimensionRatio="1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
