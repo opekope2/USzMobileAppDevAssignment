@@ -22,7 +22,7 @@
     <string name="add">Add</string>
     <string name="save">Save</string>
     <string name="discard">Discard</string>
-    <string name="unsaved">You have unsaved changes</string>
+    <string name="unsaved">You may have unsaved changes</string>
     <string name="empty_username_or_password">Username or password is empty</string>
     <string name="loading_recipe">Loading recipe</string>
     <string name="recipe_loading_failed">Failed to load recipe</string>
