@@ -42,7 +42,7 @@ public class IngredientListViewerAdapter extends AbstractIngredientListAdapter<I
             textViewIngredient.setText(
                     String.format(
                             Locale.getDefault(),
-                            "%d%s %s",
+                            "%s%s %s",
                             ingredient.getAmount(),
                             ingredient.getUnit(),
                             ingredient.getIngredient()
