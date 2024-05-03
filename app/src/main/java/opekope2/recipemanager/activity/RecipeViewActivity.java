@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -114,9 +113,9 @@ public class RecipeViewActivity extends AppCompatActivity {
                 ProgressDialog progressDialog = dialogService.progress(R.string.deleting_recipe);
                 recipeManager.deleteRecipe(user, recipe)
                         .addOnSuccessListener(v1 -> progressDialog.dismiss())
-                        .addOnSuccessListener(v -> Toast.makeText(this, R.string.recipe_deleted, Toast.LENGTH_LONG).show())
+                        .addOnSuccessListener(v -> dialogService.toast(R.string.recipe_deleted))
                         .addOnSuccessListener(v -> finish())
-                        .addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show());
+                        .addOnFailureListener(e -> dialogService.toast(e.getMessage()));
 
             });
             return true;

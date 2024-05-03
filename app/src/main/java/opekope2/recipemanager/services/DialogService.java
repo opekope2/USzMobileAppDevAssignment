@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 
@@ -15,6 +16,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class DialogService {
     private final Context context;
+
+    public void toast(@StringRes int message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void toast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
 
     public void alert(
             @StringRes int title,

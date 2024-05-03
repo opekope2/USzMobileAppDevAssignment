@@ -3,7 +3,6 @@ package opekope2.recipemanager.activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +22,7 @@ import java.util.stream.StreamSupport;
 import opekope2.recipemanager.R;
 import opekope2.recipemanager.adapter.RecipeListAdapter;
 import opekope2.recipemanager.data.Recipe;
+import opekope2.recipemanager.services.DialogService;
 import opekope2.recipemanager.services.RecipeManagerService;
 
 public class RecipeListActivity extends AppCompatActivity {
@@ -30,6 +30,8 @@ public class RecipeListActivity extends AppCompatActivity {
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private FirebaseUser user;
     private final RecipeManagerService recipeManager = new RecipeManagerService(firestore);
+    private final DialogService dialogService = new DialogService(this);
+
     private SwipeRefreshLayout swipeRefreshRecipeList;
     private RecyclerView recyclerViewRecipes;
     private RecipeListAdapter recipesAdapter;
@@ -74,7 +76,7 @@ public class RecipeListActivity extends AppCompatActivity {
                     swipeRefreshRecipeList.setRefreshing(false);
                 })
                 .addOnFailureListener(exception -> {
-                    Toast.makeText(RecipeListActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+                    dialogService.toast(exception.getMessage());
                     swipeRefreshRecipeList.setRefreshing(false);
                 });
     }
