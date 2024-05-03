@@ -30,14 +30,12 @@ public class DialogService {
     }
 
     public void confirm(
-            @StringRes int title,
             @StringRes int message,
             @StringRes int yesButtonText,
             @StringRes int noButtonText,
             DialogInterface.OnClickListener buttonClickListener
     ) {
         new AlertDialog.Builder(context)
-                .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(yesButtonText, buttonClickListener)
                 .setNegativeButton(noButtonText, buttonClickListener)

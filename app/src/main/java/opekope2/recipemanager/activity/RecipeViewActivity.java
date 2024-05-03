@@ -103,8 +103,22 @@ public class RecipeViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Thanks Google for removing switch-case, I hate it
         if (item.getItemId() == R.id.editRecipe) {
             // TODO
+            return true;
+        } else if (item.getItemId() == R.id.deleteRecipe) {
+            dialogService.confirm(R.string.confirm_delete, R.string.delete, android.R.string.cancel, (alertDialog, which) -> {
+                if (which != DialogInterface.BUTTON_POSITIVE) return;
+
+                ProgressDialog progressDialog = dialogService.progress(R.string.deleting_recipe);
+                recipeManager.deleteRecipe(user, recipe)
+                        .addOnSuccessListener(v1 -> progressDialog.dismiss())
+                        .addOnSuccessListener(v -> Toast.makeText(this, R.string.recipe_deleted, Toast.LENGTH_LONG).show())
+                        .addOnSuccessListener(v -> finish())
+                        .addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show());
+
+            });
             return true;
         }
         return super.onOptionsItemSelected(item);
