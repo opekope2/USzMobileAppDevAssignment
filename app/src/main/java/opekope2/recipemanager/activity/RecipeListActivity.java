@@ -1,6 +1,7 @@
 package opekope2.recipemanager.activity;
 
 import static opekope2.recipemanager.Util.RECIPE_ID_EXTRA_KEY;
+import static opekope2.recipemanager.Util.isNullOrEmpty;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -96,7 +97,7 @@ public class RecipeListActivity extends AppCompatActivity {
         // Thanks Google for removing switch-case, I hate it
         if (item.getItemId() == R.id.addRecipe) {
             dialogService.prompt(R.string.create_recipe, R.string.recipe_name, R.string.create_recipe, android.R.string.cancel, result -> {
-                if (result == null) return;
+                if (isNullOrEmpty(result)) return;
 
                 ProgressDialog progressDialog = dialogService.progress(R.string.creating_recipe);
                 recipeManager.createRecipe(user, new Recipe(null, result, "", Collections.emptyList(), Collections.emptyList()))
