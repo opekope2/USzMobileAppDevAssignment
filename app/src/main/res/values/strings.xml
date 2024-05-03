@@ -5,7 +5,9 @@
     <string name="confirm_password">Confirm password</string>
     <string name="password_mismatch">Passwords don\'t match</string>
     <string name="log_in">Log in</string>
+    <string name="logging_in">Logging in</string>
     <string name="register">Register</string>
+    <string name="registering">Registering</string>
     <string name="login_failed">Login failed</string>
     <string name="register_failed">Registration failed</string>
     <string name="recipes">Recipes</string>

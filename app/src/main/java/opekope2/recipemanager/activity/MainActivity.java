@@ -2,6 +2,7 @@ package opekope2.recipemanager.activity;
 
 import static opekope2.recipemanager.Util.isNullOrEmpty;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void authenticate(View button, BiFunction<String, String, Task<AuthResult>> authMethod, Runnable onSuccess, Consumer<String> onFail) {
+    private void authenticate(@StringRes int message, BiFunction<String, String, Task<AuthResult>> authMethod, Runnable onSuccess, Consumer<String> onFail) {
         EditText editTextUsername = findViewById(R.id.editTextEmail),
                 editTextPassword = findViewById(R.id.editTextPassword);
         String username = editTextUsername.getText().toString(),
@@ -69,21 +71,21 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        button.setEnabled(false);
+        ProgressDialog progressDialog = dialogService.progress(message);
         authMethod.apply(username, password)
                 .addOnSuccessListener(authResult -> {
-                    button.setEnabled(true);
+                    progressDialog.dismiss();
                     onSuccess.run();
                 })
-                .addOnFailureListener(this, exception -> {
-                    button.setEnabled(true);
+                .addOnFailureListener(exception -> {
+                    progressDialog.dismiss();
                     onFail.accept(exception.getMessage());
                 });
     }
 
     public void logIn(View view) {
         authenticate(
-                view,
+                R.string.logging_in,
                 auth::signInWithEmailAndPassword,
                 this::viewRecipes,
                 error -> dialogService.alert(R.string.login_failed, error, android.R.string.ok, (dialog, which) -> {
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         authenticate(
-                view,
+                R.string.registering,
                 auth::createUserWithEmailAndPassword,
                 this::viewRecipes,
                 error -> dialogService.alert(R.string.register_failed, error, android.R.string.ok, (dialog, which) -> {
