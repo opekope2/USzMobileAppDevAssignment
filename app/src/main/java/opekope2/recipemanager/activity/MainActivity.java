@@ -9,8 +9,6 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,13 +23,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 import opekope2.recipemanager.R;
 import opekope2.recipemanager.fragment.LoginFragment;
 import opekope2.recipemanager.fragment.RegisterFragment;
+import opekope2.recipemanager.services.DialogService;
 
 public class MainActivity extends AppCompatActivity {
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final DialogService dialogService = new DialogService(this);
 
     private void configureTabs(TabLayout.Tab tab, int i) {
         tab.setText(LoginRegisterFragmentAdapter.TAB_TEXT_IDS[i]);
@@ -57,51 +58,46 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void handleAuth(View button, BiFunction<String, String, Task<AuthResult>> authMethod, Runnable onSuccess, Runnable onFail) {
+    private void authenticate(View button, BiFunction<String, String, Task<AuthResult>> authMethod, Runnable onSuccess, Consumer<String> onFail) {
         EditText editTextUsername = findViewById(R.id.editTextEmail),
                 editTextPassword = findViewById(R.id.editTextPassword);
         String username = editTextUsername.getText().toString(),
                 password = editTextPassword.getText().toString();
 
         if (isNullOrEmpty(username) || isNullOrEmpty(password)) {
-            onFail.run();
+            onFail.accept(getString(R.string.empty_username_or_password));
             return;
         }
 
         button.setEnabled(false);
-        authMethod.apply(username, password).addOnCompleteListener(this, task -> {
-            button.setEnabled(true);
-            if (task.isSuccessful()) {
-                onSuccess.run();
-            } else {
-                onFail.run();
-            }
-        });
-    }
-
-    private void alert(@StringRes int messageId) {
-        new AlertDialog.Builder(this)
-                .setMessage(messageId)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+        authMethod.apply(username, password)
+                .addOnSuccessListener(authResult -> {
+                    button.setEnabled(true);
+                    onSuccess.run();
                 })
-                .show();
+                .addOnFailureListener(this, exception -> {
+                    button.setEnabled(true);
+                    onFail.accept(exception.getMessage());
+                });
     }
 
     public void logIn(View view) {
-        handleAuth(
+        authenticate(
                 view,
                 auth::signInWithEmailAndPassword,
                 this::viewRecipes,
-                () -> alert(R.string.login_failed)
+                error -> dialogService.alert(R.string.login_failed, error, android.R.string.ok, (dialog, which) -> {
+                })
         );
     }
 
     public void register(View view) {
-        handleAuth(
+        authenticate(
                 view,
                 auth::createUserWithEmailAndPassword,
                 this::viewRecipes,
-                () -> alert(R.string.register_failed)
+                error -> dialogService.alert(R.string.register_failed, error, android.R.string.ok, (dialog, which) -> {
+                })
         );
     }
 

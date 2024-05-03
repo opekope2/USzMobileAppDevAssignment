@@ -17,6 +17,6 @@
     <string name="view_recipe">View recipe</string>
     <string name="save">Save</string>
     <string name="discard">Discard</string>
-    <string name="cancel">Cancel</string>
     <string name="unsaved">You have unsaved changes</string>
+    <string name="empty_username_or_password">Username or password is empty</string>
 </resources>
