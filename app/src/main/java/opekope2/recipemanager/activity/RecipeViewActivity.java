@@ -76,14 +76,15 @@ public class RecipeViewActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     bind();
                 })
-                .addOnFailureListener(
-                        exception -> dialogService.alert(
-                                R.string.recipe_loading_failed,
-                                exception.getMessage(),
-                                android.R.string.ok,
-                                (dialog, which) -> finish()
-                        )
-                );
+                .addOnFailureListener(exception -> {
+                    progressDialog.dismiss();
+                    dialogService.alert(
+                            R.string.recipe_loading_failed,
+                            exception.getMessage(),
+                            android.R.string.ok,
+                            (dialog, which) -> finish()
+                    );
+                });
     }
 
     private void bind() {
