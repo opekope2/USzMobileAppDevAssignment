@@ -92,6 +92,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
+        EditText editTextPassword = findViewById(R.id.editTextPassword),
+                editTextPassword2 = findViewById(R.id.editTextPassword2);
+        String password = editTextPassword.getText().toString(),
+                confirmPassword = editTextPassword2.getText().toString();
+
+        if (!password.equals(confirmPassword)) {
+            dialogService.alert(R.string.register_failed, getString(R.string.password_mismatch), android.R.string.ok, (dialog, which) -> {
+            });
+            return;
+        }
+
         authenticate(
                 view,
                 auth::createUserWithEmailAndPassword,
