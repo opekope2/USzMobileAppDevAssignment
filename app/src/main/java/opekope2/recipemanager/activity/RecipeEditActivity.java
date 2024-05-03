@@ -132,6 +132,7 @@ public class RecipeEditActivity extends AppCompatActivity {
 
     private void bind() {
         editTextRecipeName.setText(recipe.getName());
+        editTextRecipeDescription.setText(recipe.getDescription());
 
         ingredientsAdapter = new IngredientListEditorAdapter(this, recipe.getIngredients());
         instructionsAdapter = new InstructionListEditorAdapter(this, recipe.getInstructions());
