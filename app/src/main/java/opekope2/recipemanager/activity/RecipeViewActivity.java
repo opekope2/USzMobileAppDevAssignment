@@ -72,9 +72,13 @@ public class RecipeViewActivity extends AppCompatActivity {
         ProgressDialog progressDialog = dialogService.progress(R.string.loading_recipe);
         recipeManager.getRecipe(user, recipeId)
                 .addOnSuccessListener(documentSnapshot -> {
-                    recipe = documentSnapshot.toObject(Recipe.class);
                     progressDialog.dismiss();
-                    bind();
+                    recipe = documentSnapshot.toObject(Recipe.class);
+                    if (recipe != null) {
+                        bind();
+                    } else {
+                        finish();
+                    }
                 })
                 .addOnFailureListener(exception -> {
                     progressDialog.dismiss();
