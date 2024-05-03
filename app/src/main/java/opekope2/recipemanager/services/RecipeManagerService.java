@@ -29,6 +29,7 @@ public class RecipeManagerService {
                 new Recipe(
                         recipeDocument.getId(),
                         recipe.getName(),
+                        recipe.getDescription(),
                         recipe.getIngredients(),
                         recipe.getInstructions()
                 )

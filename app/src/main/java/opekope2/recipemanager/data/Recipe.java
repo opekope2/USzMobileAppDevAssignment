@@ -21,11 +21,13 @@ public class Recipe implements Parcelable {
     @Nullable
     private String id;
     private String name;
+    private String description;
     private List<Ingredient> ingredients;
     private List<Instruction> instructions;
 
     protected Recipe(Parcel in) {
         this(
+                in.readString(),
                 in.readString(),
                 in.readString(),
                 in.createTypedArrayList(Ingredient.CREATOR),
@@ -54,6 +56,7 @@ public class Recipe implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(name);
+        dest.writeString(description);
         dest.writeTypedList(ingredients);
         dest.writeTypedList(instructions);
     }

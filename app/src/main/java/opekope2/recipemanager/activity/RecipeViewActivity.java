@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class RecipeViewActivity extends AppCompatActivity {
 
     private String recipeId;
     private Recipe recipe;
+    private TextView textViewDescription;
     private RecyclerView recyclerViewIngredients;
     private RecyclerView recyclerViewInstructions;
 
@@ -55,6 +57,8 @@ public class RecipeViewActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        textViewDescription = findViewById(R.id.textViewDescription);
 
         RecyclerView.LayoutManager ingredientsLayoutManager = new LinearLayoutManager(this);
         recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
@@ -86,6 +90,7 @@ public class RecipeViewActivity extends AppCompatActivity {
     private void bind() {
         Objects.requireNonNull(getSupportActionBar()).setTitle(recipe.getName());
 
+        textViewDescription.setText(recipe.getDescription());
         recyclerViewIngredients.setAdapter(new IngredientListViewerAdapter(this, recipe.getIngredients()));
         recyclerViewInstructions.setAdapter(new InstructionListViewerAdapter(this, recipe.getInstructions()));
     }
